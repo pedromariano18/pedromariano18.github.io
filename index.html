@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedro Mariano — Portfolio</title>
+<meta name="description" content="MSc student in Network and Computer Systems Engineering at FCUP. Networks, security, and distributed systems.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06101e;
+  --bg2:#0a1628;
+  --accent:#2e6da4;
+  --accent2:#1a3a5c;
+  --text:#e8edf2;
+  --muted:#7a8fa6;
+  --border:rgba(46,109,164,0.2);
+  --card:rgba(10,22,40,0.8);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(6,16,30,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);letter-spacing:0.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:400;transition:color 0.2s;letter-spacing:0.02em}
+.nav-links a:hover{color:var(--text)}
+
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 3rem}
+canvas#particles{position:absolute;inset:0;opacity:0.6}
+.hero-content{position:relative;z-index:2;max-width:680px}
+.hero-tag{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s 0.2s forwards}
+.hero-name{font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.1;margin-bottom:1rem;letter-spacing:-0.02em;opacity:0;animation:fadeUp 0.8s 0.4s forwards}
+.hero-name strong{font-weight:500;color:#fff}
+.hero-sub{font-size:1.1rem;color:var(--muted);font-weight:300;margin-bottom:2rem;max-width:480px;opacity:0;animation:fadeUp 0.8s 0.6s forwards}
+.hero-links{display:flex;gap:1rem;opacity:0;animation:fadeUp 0.8s 0.8s forwards}
+.btn{padding:0.7rem 1.5rem;border-radius:6px;font-size:14px;font-weight:400;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#3a7ec0}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--muted);font-size:12px;opacity:0;animation:fadeUp 1s 1.2s forwards}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--accent));animation:scrollLine 1.5s 1.5s infinite}
+
+section{padding:6rem 3rem;max-width:860px;margin:0 auto}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.75rem}
+.section-title{font-size:2rem;font-weight:300;letter-spacing:-0.02em;margin-bottom:3rem}
+.section-title strong{font-weight:500}
+
+#about{max-width:860px;margin:0 auto;padding:6rem 3rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--muted);font-weight:300;margin-bottom:1rem;font-size:1rem}
+.about-text p:last-child{margin-bottom:0}
+.about-meta{display:flex;flex-direction:column;gap:1rem}
+.meta-item{display:flex;flex-direction:column;gap:0.15rem}
+.meta-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase}
+.meta-value{font-size:0.95rem;color:var(--text);font-weight:300}
+
+#history{background:var(--bg2);padding:6rem 0}
+.history-inner{max-width:860px;margin:0 auto;padding:0 3rem}
+.timeline{position:relative;padding-left:0}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border);transform:translateX(-50%)}
+.tl-item{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:0;position:relative}
+.tl-left{padding:0 2.5rem 3rem 0;text-align:right}
+.tl-right{padding:0 0 3rem 2.5rem;text-align:left}
+.tl-empty{padding:0 0 3rem 0}
+.tl-dot{position:absolute;left:50%;top:0.35rem;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:var(--accent2);border:2px solid var(--accent);z-index:2;transition:background 0.2s}
+.tl-item:hover .tl-dot{background:var(--accent)}
+.tl-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.1em;margin-bottom:0.4rem}
+.tl-type{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.tl-title{font-size:1rem;font-weight:500;color:var(--text);margin-bottom:0.2rem}
+.tl-org{font-size:0.85rem;color:var(--accent);font-weight:300;margin-bottom:0.5rem}
+.tl-desc{font-size:0.85rem;color:var(--muted);font-weight:300;line-height:1.6}
+
+#skills{background:var(--bg);padding:6rem 0}
+.skills-inner{max-width:860px;margin:0 auto;padding:0 3rem}
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;transition:border-color 0.2s}
+.skill-card:hover{border-color:var(--accent)}
+.skill-card-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.tag{font-size:12px;color:var(--muted);background:rgba(46,109,164,0.08);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.6rem;font-family:'DM Mono',monospace}
+
+#projects{max-width:860px;margin:0 auto;padding:6rem 3rem}
+.filter-bar{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.filter-btn{padding:0.4rem 1rem;border-radius:4px;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:0.05em;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all 0.2s}
+.filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(46,109,164,0.08)}
+.projects-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border)}
+.project-card{background:var(--bg);padding:1.75rem 2rem;transition:background 0.2s;display:flex;justify-content:space-between;align-items:start;gap:2rem}
+.project-card:hover{background:var(--bg2)}
+.project-card.hidden{display:none}
+.project-left{flex:1}
+.project-name{font-size:1.05rem;font-weight:500;margin-bottom:0.4rem;color:var(--text)}
+.project-desc{font-size:0.9rem;color:var(--muted);font-weight:300;margin-bottom:0.75rem;line-height:1.6}
+.project-stack{display:flex;flex-wrap:wrap;gap:0.4rem}
+.stack-tag{font-size:11px;font-family:'DM Mono',monospace;color:var(--accent);opacity:0.7}
+.stack-tag:not(:last-child)::after{content:" ·";margin-right:0.2rem}
+.project-right{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem}
+.project-cat{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.project-link{font-size:12px;color:var(--accent);text-decoration:none;opacity:0.7;transition:opacity 0.2s}
+.project-link:hover{opacity:1}
+
+#contact{background:var(--bg2);padding:6rem 0}
+.contact-inner{max-width:860px;margin:0 auto;padding:0 3rem;display:flex;justify-content:space-between;align-items:center;gap:3rem}
+.contact-text .section-title{margin-bottom:0.5rem}
+.contact-text p{color:var(--muted);font-weight:300;font-size:0.95rem}
+.contact-links{display:flex;flex-direction:column;gap:0.75rem;flex-shrink:0}
+.contact-link{display:flex;align-items:center;gap:0.75rem;color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:300;transition:color 0.2s}
+.contact-link:hover{color:var(--text)}
+.contact-link-icon{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);width:20px}
+
+footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollLine{0%,100%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">pm.</div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#history">history</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-content">
+    <div class="hero-tag">Network & Systems Engineering</div>
+    <h1 class="hero-name"><strong>Pedro</strong><br>Mariano</h1>
+    <p class="hero-sub">MSc student at FCUP building things at the intersection of networks, security, and distributed systems.</p>
+    <div class="hero-links">
+      <a href="#projects" class="btn btn-primary">View projects</a>
+      <a href="https://github.com/pedromariano18" class="btn btn-outline">GitHub</a>
+      <a href="https://www.linkedin.com/in/pedro-mariano-654b44376" class="btn btn-outline">LinkedIn</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label">about</div>
+  <h2 class="section-title"><strong>Who</strong> I am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Master's student in Network and Computer Systems Engineering at FCUP, with a Bachelor's in Computer Engineering from the University of Aveiro.</p>
+      <p>My work spans network protocols and performance, security infrastructure, backend development, and data-driven analysis applied to real-world systems.</p>
+      <p>Previously conducted undergraduate research at Instituto de Telecomunicações, building a real-time sensor fusion system for A25 highway traffic management.</p>
+    </div>
+    <div class="about-meta">
+      <div class="meta-item">
+        <span class="meta-label">Location</span>
+        <span class="meta-value">Porto, Portugal</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Degree</span>
+        <span class="meta-value">BSc Computer Engineering, UA</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Currently</span>
+        <span class="meta-value">MSc @ FCUP</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">Open to internships in networking, cybersecurity, or systems engineering</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Email</span>
+        <span class="meta-value">mariano.pedro2003@gmail.com</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="history">
+  <div class="history-inner">
+    <div class="section-label">history</div>
+    <h2 class="section-title" style="margin-bottom:3rem"><strong>Education</strong> & experience</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">2025 — present</div>
+          <div class="tl-type">education</div>
+          <div class="tl-title">MSc Network & Computer Systems Engineering</div>
+          <div class="tl-org">Faculdade de Ciências, Universidade do Porto</div>
+          <div class="tl-desc">Network architecture, cybersecurity, distributed systems, and software engineering.</div>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-empty"></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-empty"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-right">
+          <div class="tl-date">Sep 2024 — Jul 2025</div>
+          <div class="tl-type">research</div>
+          <div class="tl-title">Undergraduate Student Researcher</div>
+          <div class="tl-org">Instituto de Telecomunicações, Aveiro</div>
+          <div class="tl-desc">Developed a real-time sensor fusion system for A25 highway traffic management, integrating radar, weather, and camera data.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">Aug 2024</div>
+          <div class="tl-type">internship</div>
+          <div class="tl-title">IT Intern</div>
+          <div class="tl-org">WeHaveSolutions Unipessoal, Lda</div>
+          <div class="tl-desc">Technical support, hardware diagnostics, OS configuration, and network troubleshooting.</div>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-empty"></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-empty"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-right">
+          <div class="tl-date">2022 — 2025</div>
+          <div class="tl-type">education</div>
+          <div class="tl-title">BSc Computer Engineering and Informatics</div>
+          <div class="tl-org">Universidade de Aveiro</div>
+          <div class="tl-desc">Software development, network security, systems architecture, and hardware programming. Final grade: 13/20.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="skills">
+  <div class="skills-inner">
+    <div class="section-label">expertise</div>
+    <h2 class="section-title"><strong>Technical</strong> skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">C</span><span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">SQL</span><span class="tag">MATLAB</span><span class="tag">Bash</span><span class="tag">VHDL</span><span class="tag">Assembly</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Networking</div>
+        <div class="skill-tags">
+          <span class="tag">GNS3</span><span class="tag">Wireshark</span><span class="tag">OSPF</span><span class="tag">QUIC/HTTP3</span><span class="tag">iptables</span><span class="tag">tc/netem</span><span class="tag">VirtualBox</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Security</div>
+        <div class="skill-tags">
+          <span class="tag">OpenSC</span><span class="tag">PKCS#11</span><span class="tag">Nmap</span><span class="tag">Cowrie</span><span class="tag">Snort</span><span class="tag">T-Pot</span><span class="tag">BouncyCastle</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Data & Tools</div>
+        <div class="skill-tags">
+          <span class="tag">pandas</span><span class="tag">scikit-learn</span><span class="tag">NetworkX</span><span class="tag">MediaPipe</span><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">Linux</span><span class="tag">LaTeX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="projects">
+  <div class="section-label">work</div>
+  <h2 class="section-title"><strong>Selected</strong> projects</h2>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+    <button class="filter-btn" onclick="filterProjects('security',this)">Security</button>
+    <button class="filter-btn" onclick="filterProjects('networking',this)">Networking</button>
+    <button class="filter-btn" onclick="filterProjects('mobile',this)">Mobile</button>
+    <button class="filter-btn" onclick="filterProjects('data',this)">Data & ML</button>
+  </div>
+  <div class="projects-grid" style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+    <div class="project-card" data-cat="security networking">
+      <div class="project-left">
+        <div class="project-name">Public Ledger Auctions</div>
+        <div class="project-desc">Decentralized P2P auction system over a Kademlia DHT with blockchain-style ledger, PoW/PoR consensus, TLS 1.3 and ECDSA authentication. Includes fault injection test suite covering eclipse attacks and byzantine nodes.</div>
+        <div class="project-stack"><span class="stack-tag">Java</span><span class="stack-tag">Netty</span><span class="stack-tag">BouncyCastle</span><span class="stack-tag">Docker</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Security · Networking</span>
+        <a href="https://github.com/pedromariano18/Proj_SSD" class="project-link">github ↗</a>
+      </div>
+    </div>
+    <div class="project-card" data-cat="security">
+      <div class="project-left">
+        <div class="project-name">Honeypots & Honeynets</div>
+        <div class="project-desc">Automated HoneyNet pipeline: Cowrie SSH honeypot, IoC parser and severity classifier, dynamic Snort rule generation, Streamlit dashboard and STIX 2.1 export for SIEM integration.</div>
+        <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Cowrie</span><span class="stack-tag">Snort</span><span class="stack-tag">Streamlit</span><span class="stack-tag">SQLite</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Security</span>
+        <a href="https://github.com/pedromariano18/SR_Proj" class="project-link">github ↗</a>
+      </div>
+    </div>
+    <div class="project-card" data-cat="security">
+      <div class="project-left">
+        <div class="project-name">PKI Infrastructure with JavaCard</div>
+        <div class="project-desc">Full PKI architecture using JavaCard smart cards, managing certificate issuance, storage, and validation via PKCS#11.</div>
+        <div class="project-stack"><span class="stack-tag">IsoApplet</span><span class="stack-tag">OpenSC</span><span class="stack-tag">PKCS#11</span><span class="stack-tag">GlobalPlatformPro</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Security</span>
+      </div>
+    </div>
+    <div class="project-card" data-cat="mobile">
+      <div class="project-left">
+        <div class="project-name">StudyFlow — Android App</div>
+        <div class="project-desc">Full Android study management app with MVVM architecture, study session timer, task management, geofencing-based study mode, WorkManager reminders and Firebase authentication.</div>
+        <div class="project-stack"><span class="stack-tag">Kotlin</span><span class="stack-tag">Jetpack Compose</span><span class="stack-tag">Firebase</span><span class="stack-tag">Room</span><span class="stack-tag">Hilt</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Mobile</span>
+        <a href="https://github.com/pedromariano18/ICM-StudyFlow" class="project-link">github ↗</a>
+      </div>
+    </div>
+    <div class="project-card" data-cat="data">
+      <div class="project-left">
+        <div class="project-name">Exercise Repetition Counter</div>
+        <div class="project-desc">Real-time pose estimation system using MediaPipe to count exercise repetitions via joint angle calculation and finite state machine logic. Supports push-ups, jumping jacks, and lunges with postural error detection.</div>
+        <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">MediaPipe</span><span class="stack-tag">OpenCV</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Computer Vision</span>
+        <a href="https://github.com/pedromariano18/VC_proj" class="project-link">github ↗</a>
+      </div>
+    </div>
+    <div class="project-card" data-cat="data">
+      <div class="project-left">
+        <div class="project-name">Pediatric Cardiac Disease Prediction</div>
+        <div class="project-desc">ML pipeline on a clinical dataset: preprocessing, feature selection via Random Forest, Gradient Boosting and RFE, and evaluation of five classifiers including SVM, Naive Bayes and MLP.</div>
+        <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">scikit-learn</span><span class="stack-tag">pandas</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Data Science</span>
+        <a href="https://github.com/pedromariano18/FDS_Proj" class="project-link">github ↗</a>
+      </div>
+    </div>
+    <div class="project-card" data-cat="data">
+      <div class="project-left">
+        <div class="project-name">Fake News Detection Pipeline</div>
+        <div class="project-desc">Probabilistic fake news detection system combining MinHash similarity detection, Bloom Filter membership lookup, and a Naive Bayes text classifier implemented in MATLAB.</div>
+        <div class="project-stack"><span class="stack-tag">MATLAB</span><span class="stack-tag">MinHash</span><span class="stack-tag">Bloom Filter</span><span class="stack-tag">Naive Bayes</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Data Science</span>
+        <a href="https://github.com/pedromariano18/MPEI_Proj" class="project-link">github ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="contact">
+  <div class="contact-inner">
+    <div class="contact-text">
+      <div class="section-label">contact</div>
+      <h2 class="section-title" style="margin-bottom:0.5rem"><strong>Get</strong> in touch</h2>
+      <p>Open to internships in networking, cybersecurity, or systems engineering.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:mariano.pedro2003@gmail.com" class="contact-link">
+        <span class="contact-link-icon">@</span>
+        mariano.pedro2003@gmail.com
+      </a>
+      <a href="https://github.com/pedromariano18" class="contact-link">
+        <span class="contact-link-icon">gh</span>
+        github.com/pedromariano18
+      </a>
+      <a href="https://www.linkedin.com/in/pedro-mariano-654b44376" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        linkedin.com/in/pedro-mariano
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>pedro mariano © 2025</p>
+  <p>porto, portugal</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+function Particle(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-0.5)*0.3;this.vy=(Math.random()-0.5)*0.3;this.r=Math.random()*1.5+0.5;this.alpha=Math.random()*0.4+0.1}
+function init(){resize();particles=[];for(let i=0;i<80;i++)particles.push(new Particle())}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;
+    if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(46,109,164,${p.alpha})`;ctx.fill();
+  });
+  particles.forEach((a,i)=>{
+    particles.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(46,109,164,${0.15*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke()}
+    });
+  });
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',init);init();draw();
+
+function filterProjects(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card=>{
+    if(cat==='all'||card.dataset.cat.includes(cat)){card.classList.remove('hidden')}
+    else{card.classList.add('hidden')}
+  });
+}
+</script>
+</body>
+</html>
