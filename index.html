@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedro Mariano — Portfolio</title>
+<title>Pedro Mariano</title>
 <meta name="description" content="MSc student in Network and Computer Systems Engineering at FCUP. Networks, security, and distributed systems.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -40,6 +40,9 @@ canvas#particles{position:absolute;inset:0;opacity:0.6}
 .btn-primary:hover{background:#3a7ec0}
 .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-inner{display:flex;align-items:center;gap:3rem}
+.hero-photo{flex-shrink:0;opacity:0;animation:fadeUp 0.8s 0.1s forwards}
+.hero-photo img{width:140px;height:140px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--accent);filter:grayscale(20%)}
 .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--muted);font-size:12px;opacity:0;animation:fadeUp 1s 1.2s forwards}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--accent));animation:scrollLine 1.5s 1.5s infinite}
 
@@ -132,6 +135,10 @@ footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
 
 <section id="hero">
   <canvas id="particles"></canvas>
+  <div class="hero-inner">
+  <div class="hero-photo">
+    <img src="EU.png" alt="Pedro Mariano">
+  </div>
   <div class="hero-content">
     <div class="hero-tag">Network & Systems Engineering</div>
     <h1 class="hero-name"><strong>Pedro</strong><br>Mariano</h1>
@@ -141,6 +148,7 @@ footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
       <a href="https://github.com/pedromariano18" class="btn btn-outline">GitHub</a>
       <a href="https://www.linkedin.com/in/pedro-mariano-654b44376" class="btn btn-outline">LinkedIn</a>
     </div>
+  </div>
   </div>
   <div class="scroll-hint">
     <span>scroll</span>
