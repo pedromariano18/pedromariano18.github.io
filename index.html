@@ -285,6 +285,7 @@ footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
     <button class="filter-btn" onclick="filterProjects('networking',this)">Networking</button>
     <button class="filter-btn" onclick="filterProjects('mobile',this)">Mobile</button>
     <button class="filter-btn" onclick="filterProjects('data',this)">Data & ML</button>
+    <button class="filter-btn" onclick="filterProjects('web',this)">Web</button>
   </div>
   <div class="projects-grid" style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
     <div class="project-card" data-cat="security networking">
@@ -309,6 +310,17 @@ footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
         <a href="https://github.com/pedromariano18/SR_Proj" class="project-link">github ↗</a>
       </div>
     </div>
+    <div class="project-card" data-cat="data networking">
+      <div class="project-left">
+        <div class="project-name">S&amp;P 500 Correlation Networks</div>
+        <div class="project-desc">Network science analysis of S&amp;P 500 stock correlations in 2019 vs 2020 (COVID crash). Correlation networks, MST hub analysis, and Louvain communities validated against GICS sectors via NMI, with threshold sensitivity and significance testing.</div>
+        <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">NetworkX</span><span class="stack-tag">python-louvain</span><span class="stack-tag">Gephi</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Network Science</span>
+        <a href="https://github.com/pedromariano18/CR_Proj" class="project-link">github ↗</a>
+      </div>
+    </div>
     <div class="project-card" data-cat="security">
       <div class="project-left">
         <div class="project-name">PKI Infrastructure with JavaCard</div>
@@ -322,7 +334,7 @@ footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
     </div>
     <div class="project-card" data-cat="mobile">
       <div class="project-left">
-        <div class="project-name">StudyFlow — Android App</div>
+        <div class="project-name">StudyFlow: Android App</div>
         <div class="project-desc">Full Android study management app with MVVM architecture, study session timer, task management, geofencing-based study mode, WorkManager reminders and Firebase authentication.</div>
         <div class="project-stack"><span class="stack-tag">Kotlin</span><span class="stack-tag">Jetpack Compose</span><span class="stack-tag">Firebase</span><span class="stack-tag">Room</span><span class="stack-tag">Hilt</span></div>
       </div>
@@ -362,6 +374,17 @@ footer p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
       <div class="project-right">
         <span class="project-cat">Data Science</span>
         <a href="https://github.com/pedromariano18/MPEI_Proj" class="project-link">github ↗</a>
+      </div>
+    </div>
+    <div class="project-card" data-cat="web">
+      <div class="project-left">
+        <div class="project-name">InterCultural Surf for Kids</div>
+        <div class="project-desc">Official website for a community surf event in Figueira da Foz, built from scratch with vanilla HTML/CSS/JS and running in production. Bilingual PT/EN, light/dark theme, photo gallery with lightbox, edition history and SEO.</div>
+        <div class="project-stack"><span class="stack-tag">HTML</span><span class="stack-tag">CSS</span><span class="stack-tag">JavaScript</span></div>
+      </div>
+      <div class="project-right">
+        <span class="project-cat">Web</span>
+        <a href="https://interculturalsurfkids.pt" class="project-link">site ↗</a>
       </div>
     </div>
   </div>
